@@ -1,6 +1,11 @@
 ### Welcome 👋
 
-[![Github Stats](https://github-readme-stats.vercel.app/api?username=aethernet65535&show_icons=true)](https://github.com/aethernet65535)
+Hello! I'm a beginner with a strong interest in computers.
+
+### 🚀 What I'm currently learning:
+- **Languages:** C, RISC-V ASM
+- **Core Concept:** Operating System
+- **Project:** XV6-LAB-2020
 
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=aethernet65535&layout=compact)](https://github.com/aethernet65535)
 

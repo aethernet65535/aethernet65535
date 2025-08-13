@@ -5,7 +5,7 @@ Hello! I'm a beginner with a strong interest in computers.
 ### 🚀 What I'm currently learning:
 - **Languages:** C, RISC-V ASM
 - **Core Concept:** Operating System
-- **Project:** XV6-LAB-2020
+- **Project**: Reading LINUX sched source code
 
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=aethernet65535&layout=compact)](https://github.com/aethernet65535)
 

@@ -1,5 +1,5 @@
 # aethernet
-[![GitHub stats](https://github-readme-stats.vercel.app/api?username=ziyao233&show_icons=true&theme=tokyonight)](https://github.com/aethernet65535)
+[![GitHub stats](https://github-readme-stats.vercel.app/api?username=aethernet65535&show_icons=true&theme=tokyonight)](https://github.com/aethernet65535)
 
 I'm a beginner with a strong interest in computers.
 

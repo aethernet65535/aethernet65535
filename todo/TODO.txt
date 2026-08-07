@@ -1,0 +1,27 @@
+How to See?
+===========
+
+[Z] - Zero/Do nothing yet
+[W] - Working on
+[S] - Sent
+[D] - Discussing
+
+Wait, where's done?
+-------------------
+
+I will delete it o(*≧▽≦)ツ
+
+DAMON
+=====
+
+[Z] - introduce always_monitoring for damos-only stop
+[Z] - add available as an optional watermarks metric
+[Z] - clean damos_adjust_quota code
+[Z] - update documentation/comment
+    [Z] - definition of nr_snapshots
+    [Z] - add comment to kdamond_wait_activation()
+
+Linux-Kernel-Internals/MM/DAMON
+-------------------------------
+
+[Z] - how damos quota adjust worked and why is it existed? 

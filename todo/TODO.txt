@@ -17,9 +17,9 @@ DAMON
 [Z] - introduce always_monitoring for damos-only stop
 [Z] - add available as an optional watermarks metric
 [Z] - clean damos_adjust_quota code
-[Z] - update documentation/comment
+[Z] - update documentation
     [Z] - definition of nr_snapshots
-    [Z] - add comment to kdamond_wait_activation()
+    [Z] - explain monitoring do not consume much overhead
 
 Linux-Kernel-Internals/MM/DAMON
 -------------------------------

@@ -89,4 +89,6 @@ And then just change some "watermark(s)" words to "triggers", hehehe (>▽
 
 Seems like this task is very hard, but I will try it first, to make DAMON better, so DAMON can make my laptop better also.
 
+Σ(っ °Д °;)っ Wait, I just noticed that SJ say he want "deprecate watermarks"!? I think this is very wrong! User absolutely can want their scheme run when AVAILABLE% in a range they want. I think I may misunderstanding, probably is he explain not really clearly!
+
 Small TODO: I'm using phone to writing this now, later use laptop to make this more beautiful.

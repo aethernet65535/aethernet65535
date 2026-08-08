@@ -1,4 +1,4 @@
-## Why Watermarks Not Good Enough?
+### Why Watermarks Not Good Enough?
 
 This is what watermarks able to do:
 - Get FREE watermark metric, like kswapd.
@@ -11,7 +11,7 @@ But, what if the running's condition of scheme is complex? Like this:
 
 This is what DAMON Watermarks cannot do now.
 
-## So, What To Do?
+### So, What To Do?
 
 This is my experimental idea, 65535% not good on the real production.
 
@@ -22,7 +22,7 @@ wait_time = damos_wmark_wait_us(s);
 
 Just change this to a new function named `damos_may_activated()`, it will just return if this scheme should activated, and since always monitoring do not consume too much system resources, DAMON will no need to sleep in this mechanism.
 
-## What `damos_may_activated()` Do?
+### What `damos_may_activated()` Do?
 
 Actually, I don't know (。﹏。*)
 

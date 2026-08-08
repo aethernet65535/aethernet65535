@@ -16,11 +16,11 @@ DAMON
 
 [Z] - clean damos_adjust_quota code
 [Z] - update documentation
-    [Z] - definition of nr_snapshots
-    [Z] - explain monitoring do not consume much overhead
-[Z] - [make a better mechanism than watermarks](damon/no-watermarks.md)
+  [Z] - definition of nr_snapshots
+  [Z] - explain monitoring do not consume much overhead
+[Z] - [make a better mechanism than watermarks - but discuss first](damon/no-watermarks.md)
 
 Linux-Kernel-Internals/MM/DAMON
 -------------------------------
 
-[Z] - how damos quota adjust worked and why is it existed? 
+[Z] - how damos quota adjust worked and why is it existed?

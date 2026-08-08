@@ -72,15 +72,16 @@ static int damos_get_metric_value(enum damos_trig_metric metric,
 	case DAMOS_TRIG_WMARKS_NONE:
 		return damos_get_wmarks_metric_value(metric, metric_value);
 	case DAMOS_TRIG_SOMEPSI_CPU:
-  case DAMOS_TRIG_SOMEPSI_MEM:
-  case DAMOS_TRIG_SOMEPSI_IO:
-  case DAMOS_TRIG_FULLPSI_CPU:
-  case DAMOS_TRIG_FULLPSI_MEM:
-  case DAMOS_TRIG_FULLPSI_IO:
-    return damos_get_psi_metric_value(metric, metric_value);
-  default:
-    return -EINVAL;
-  }
+	case DAMOS_TRIG_SOMEPSI_MEM:
+	case DAMOS_TRIG_SOMEPSI_IO:
+	case DAMOS_TRIG_FULLPSI_CPU:
+	case DAMOS_TRIG_FULLPSI_MEM:
+	case DAMOS_TRIG_FULLPSI_IO:
+		return damos_get_psi_metric_value(metric, metric_value);
+	default:
+	return -EINVAL;
+	}
+}
 ```
 
 And then just change some "watermark(s)" words to "triggers", hehehe (>▽

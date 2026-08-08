@@ -26,22 +26,32 @@ Just change this to a new function named `damos_may_activated()`, it will just r
 
 Actually, I don't know (。﹏。*)
 
-Maybe can able users write a new path named `schemes/<N>/conditions`, this is its tree:
+Maybe can able users write a new path named `schemes/<N>/trigger`, this is its tree:
 
 ```txt
-./conditions/
-|-- watermarks/
-    |-- metric, high, mid, low
-|-- psi/
-    |-- some/, full/
-        |-- *.mem, *.cpu, *.io
-|-- meminfo/
-    |-- inactive
-    |-- active
+./trigger/
+|-- metric 
+|-- high, mid, low
 ```
+And here is the options of `metric`:
 
-To simplify it, scheme will only activated when ALL condition is true.
+- `DAMOS_TRIG_WMARKS_AVAILABLE`
 
-And I think should add a `pause` for each scheme also, to able users to use their own complex scripts in userspace.
+- `DAMOS_TRIG_WMARKS_NONE`
 
-Not sure, this task is too complex, but it should make DAMON better, so I will try first (๑•̀ㅂ•́)و✧
+- `DAMOS_TRIG_WMAKRS_FREE`
+
+- `DAMOS_TRIG_SOMEPSI_{CPU, MEM, IO}`
+
+- `DAMOS_TRIG_FULLPSI_{CPU, MEM, IO}`
+
+It only support a single metric in a same time, because if want to support multi metric will be VEEERY (WRYYY!!!) COMPLEX!!
+
+Maybe should add a `pause/stop` parameter for each schemes, to let users use their complex scripts to control their schemes. But I don't think it is too necessary, since userspace should not frequently communicate with kernelspace (it will make many overhead!).
+
+### OT (Off-Topic)
+
+Seems like this task is very hard, but I will try it first, to make DAMON better, so DAMON can make my laptop better also.
+
+
+

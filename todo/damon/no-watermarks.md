@@ -66,12 +66,12 @@ static unsigned long damos_wmark_wait_us(struct damos *scheme)
 static int damos_get_metric_value(enum damos_trig_metric metric,
 					unsigned long *metric_value)
 {
-  switch (metric) {
-  case DAMOS_TRIG_WMARKS_AVAILABLE:
-  case DAMOS_TRIG_WMARKS_FREE:
-  case DAMOS_TRIG_WMARKS_NONE:
-    return damos_get_wmarks_metric_value(metric, metric_value);
-  case DAMOS_TRIG_SOMEPSI_CPU:
+	switch (metric) {
+	case DAMOS_TRIG_WMARKS_AVAILABLE:
+	case DAMOS_TRIG_WMARKS_FREE:
+	case DAMOS_TRIG_WMARKS_NONE:
+		return damos_get_wmarks_metric_value(metric, metric_value);
+	case DAMOS_TRIG_SOMEPSI_CPU:
   case DAMOS_TRIG_SOMEPSI_MEM:
   case DAMOS_TRIG_SOMEPSI_IO:
   case DAMOS_TRIG_FULLPSI_CPU:
@@ -91,12 +91,10 @@ Seems like this task is very hard, but I will try it first, to make DAMON better
 
 Σ(っ °Д °;)っ Wait, I just noticed that SJ say he want "deprecate watermarks"!? I think this is very wrong! User absolutely can want their scheme run when AVAILABLE% in a range they want. I think I may misunderstanding, probably is he explain not really clearly!
 
-Small TODO: I'm using phone to writing this now, later use laptop to make this more beautiful.
-
 Big TODO: Stop working on this first, and tell SJ if this is the method that he wanted. Since this is such a big refactor work...and he may want to say why my real usage need this...
 
 Thinking... (65535s)
 
 My usage is open my laptop, run my DAMON_RECLAIM sh script, and use my laptop normally.
 
-But why I need to refactor...? Because I want to add always_monitoring and available metric, but SJ say NO! So I need to refactor, to add the features that I wanted. Hmm...make sense...
+But why I need to refactor...? Because I want to add always_monitoring and available metric, but SJ say NO! So I need to refactor, to add the features that I wanted. Hmm...make sense?

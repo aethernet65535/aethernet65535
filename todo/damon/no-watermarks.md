@@ -96,6 +96,7 @@ Small TODO: I'm using phone to writing this now, later use laptop to make this m
 Big TODO: Stop working on this first, and tell SJ if this is the method that he wanted. Since this is such a big refactor work...and he may want to say why my real usage need this...
 
 Thinking... (65535s)
+
 My usage is open my laptop, run my DAMON_RECLAIM sh script, and use my laptop normally.
 
 But why I need to refactor...? Because I want to add always_monitoring and available metric, but SJ say NO! So I need to refactor, to add the features that I wanted. Hmm...make sense...

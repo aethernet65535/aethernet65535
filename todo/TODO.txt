@@ -19,6 +19,7 @@ DAMON
   [Z] - definition of nr_snapshots
   [Z] - explain monitoring do not consume much overhead
 [Z] - [make a better mechanism than watermarks - but discuss first](damon/no-watermarks.md)
+[Z] - Tell SJ Patch 2 have 2 fix, ask if the coverage patch should apply
 
 Linux-Kernel-Internals/MM/DAMON
 -------------------------------

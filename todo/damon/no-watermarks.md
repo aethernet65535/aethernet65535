@@ -49,6 +49,44 @@ It only support a single metric in a same time, because if want to support multi
 
 Maybe should add a `pause/stop` parameter for each schemes, to let users use their complex scripts to control their schemes. But I don't think it is too necessary, since userspace should not frequently communicate with kernelspace (it will make many overhead!).
 
+### Implementation
+
+I KNOW HOW TO IMPLEMENT IT NOW!! It is very easy to implement.
+
+```C
+static unsigned long damos_wmark_wait_us(struct damos *scheme)
+{
+	unsigned long metric;
+
+- if (damos_get_wmark_metric_value(scheme->wmarks.metric, &metric))
++ if (damos_get_metric_value(scheme->trig.metric, &metric))
+		return 0;
+```
+```C
+static int damos_get_metric_value(enum damos_trig_metric metric,
+					unsigned long *metric_value)
+{
+  switch (metric) {
+  case DAMOS_TRIG_WMARKS_AVAILABLE:
+  case DAMOS_TRIG_WMARKS_FREE:
+  case DAMOS_TRIG_WMARKS_NONE:
+    return damos_get_wmarks_metric_value(metric, metric_value);
+  case DAMOS_TRIG_SOMEPSI_CPU:
+  case DAMOS_TRIG_SOMEPSI_MEM:
+  case DAMOS_TRIG_SOMEPSI_IO:
+  case DAMOS_TRIG_FULLPSI_CPU:
+  case DAMOS_TRIG_FULLPSI_MEM:
+  case DAMOS_TRIG_FULLPSI_IO:
+    return damos_get_psi_metric_value(metric, metric_value);
+  default:
+    return -EINVAL;
+  }
+```
+
+And then just change some "watermark(s)" words to "triggers", hehehe (>▽
+
 ### OT (Off-Topic)
 
 Seems like this task is very hard, but I will try it first, to make DAMON better, so DAMON can make my laptop better also.
+
+Small TODO: I'm using phone to writing this now, later use laptop to make this more beautiful.

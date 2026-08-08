@@ -14,12 +14,11 @@ I will delete it o(*≧▽≦)ツ
 DAMON
 =====
 
-[Z] - introduce always_monitoring for damos-only stop
-[Z] - add available as an optional watermarks metric
 [Z] - clean damos_adjust_quota code
 [Z] - update documentation
     [Z] - definition of nr_snapshots
     [Z] - explain monitoring do not consume much overhead
+[Z] - [make a better mechanism than watermarks](damon/no-watermarks.md)
 
 Linux-Kernel-Internals/MM/DAMON
 -------------------------------

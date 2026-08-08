@@ -52,6 +52,3 @@ Maybe should add a `pause/stop` parameter for each schemes, to let users use the
 ### OT (Off-Topic)
 
 Seems like this task is very hard, but I will try it first, to make DAMON better, so DAMON can make my laptop better also.
-
-
-

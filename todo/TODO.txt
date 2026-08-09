@@ -15,11 +15,10 @@ DAMON
 =====
 
 [Z] - clean damos_adjust_quota code
-[Z] - update documentation
-  [Z] - definition of nr_snapshots
-  [Z] - explain monitoring do not consume much overhead
-[Z] - [make a better mechanism than watermarks - but discuss first](damon/no-watermarks.md)
-[Z] - Tell SJ Patch 2 have 2 fix, ask if the coverage patch should apply
+[W] - update documentation
+  [W] - definition of nr_snapshots
+[Z] - [make a better mechanism than watermarks](damon/no-watermarks.md)
+  [Z] - Discuss about it
 
 Linux-Kernel-Internals/MM/DAMON
 -------------------------------

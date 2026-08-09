@@ -5,9 +5,7 @@ This is what watermarks able to do:
 
 And it may able to get AVAILABLE, CACHED, USED also.
 
-But, what if the running's condition of scheme is complex? Like this:
-1. AVAILABLE <= 20%
-2. SOME MEM PSI >= 0.10
+But, what if the condition is PSI, (IN)ACTIVE Memory? Is those watermarks?
 
 This is what DAMON Watermarks cannot do now.
 

@@ -79,7 +79,7 @@ static int damos_get_metric_value(enum damos_trig_metric metric,
 	case DAMOS_TRIG_FULLPSI_IO:
 		return damos_get_psi_metric_value(metric, metric_value);
 	default:
-	return -EINVAL;
+	  return -EINVAL;
 	}
 }
 ```

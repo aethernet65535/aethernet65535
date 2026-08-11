@@ -5,6 +5,7 @@ How to See?
 [W] - Working on
 [S] - Sent
 [D] - Discussing
+[R] - Ready to / Thinking...
 
 Wait, where's done?
 -------------------
@@ -15,10 +16,10 @@ DAMON
 =====
 
 [Z] - clean damos_adjust_quota code
-[W] - update documentation
-  [W] - definition of nr_snapshots
+[R] - update documentation
+  [R] - definition of nr_snapshots
 [Z] - [make a better mechanism than watermarks](damon/no-watermarks.md)
-  [Z] - Discuss about it
+  [R] - [Discuss about it](damon/watermarks-draft.txt)
 
 Linux-Kernel-Internals/MM/DAMON
 ===============================

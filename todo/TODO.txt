@@ -17,7 +17,8 @@ DAMON
 
 [Z] - clean damos_adjust_quota code
 [R] - update documentation
-  [R] - definition of nr_snapshots
+  [S] - definition of nr_snapshots
+  [R] - send v2 revision
 [Z] - [make a better mechanism than watermarks](damon/no-watermarks.md)
   [R] - [Discuss about it](damon/watermarks-draft.txt)
 

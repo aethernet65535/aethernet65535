@@ -1,4 +1,5 @@
-Subject: [RFC/Discussion] alternative superior feature of watermarks
+Subject: [RFC/Discussion] Helping with the alternative feature for
+ watermarks
 
 Hi SJ,
 
@@ -9,22 +10,29 @@ To share my context - I am primarily using DAMON_RECLAIM on my personal
 laptop.  During my usage, I found that using FREE% as the default
 watermark metric is highly problematic for modern Linux desktop/laptop
 environments, because the kernel aggressively uses free memory for page
-cache.  I actually had to patch my custom kernel to support AVAILABLE%
-instead of FREE%, since you mentioned we should not improve the current
-watermarks.
+cache.  Therefore, I chose to compile a kernel myself first, which
+supports monitoring AVAILABLE%, because I understood that the current
+watermark mechanism is not planned for long-term extension, I chose not
+to propose further improvements to it, and instead focused on
+understanding why that direction is limited.
 
-But I am not really understand why should we deprecate watermarks.  From
-my perspective, many features (such as always monitoring and more
-watermarks metrics) can be implemented with relatively simple patches.
-Could you explain in what cases watermarks is difficult to extend?
+But I am very interested in understanding the design constraints behind
+deprecating watermarks.  From my current perspective, some enhancements
+such as additional watermark metrics and always-on monitoring, seem
+relatively straightforward to implement.  However, I assume there is a
+deeper reason why you consider this direction unsuitable for long-term
+evolution.  If you could share a bit about those constraints, I would be
+able to think about the new mechanism in the right direction, rather
+than approaching it from my own assumptions.
 
 However, my need for more accurate trigger metric (like AVAILABLE% for
 desktop scenarios) and always monitoring is exactly why I want to help
 you build the new mechanism. And I do not want to add anything to a
 mechanism that is about to be deprecated.
 
-If you are open to this, I would be happy to help implement this new
-alternative superior feature.
+If you are open to this, I would be happy to start by reviewing the
+design direction you have in mind, and then help with implementation
+where it is feasible for me to contribute meaningfully.
 
 [1] https://lore.kernel.org/damon/20260808000739.1308-1-sj@kernel.org
 

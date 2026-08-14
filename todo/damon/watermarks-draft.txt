@@ -7,14 +7,14 @@ Regarding the alternative superior feature to replace watermarks [1], I
 am very interested in helping you design and/or implement it.
 
 To share my context: I am primarily using DAMON_RECLAIM on my personal
-laptop.  During my usage, I found that using the free memory percentage
+laptop.  During my usage, I found that using the free memory rate
 (MemFree) as the default watermark metric is highly problematic for
 modern Linux environments, because the kernel aggressively uses free
 memory for page cache.  Therefore, I compiled a custom kernel that
-supports monitoring the available memory percentage (MemAvailable).
-Since I understand that the current watermark mechanism is not planned
-for long-term extension, I refrained from proposing improvements to it,
-and instead focused on understanding why that direction is limited.
+supports monitoring the available memory rate (MemAvailable).  Since I
+understand that the current watermark mechanism is not planned for
+long-term extension, I refrained from proposing improvements to it, and
+instead focused on understanding why that direction is limited.
 
 I am very interested in understanding the design constraints behind
 deprecating watermarks.  From my current perspective, watermarks have
@@ -24,7 +24,7 @@ these drawbacks as a run/stop mechanism:
   a specific target (e.g., via VADDR), the scheme's run/stop decision is
   currently tied to global system watermarks.  It is impossible to
   determine whether to run/stop the scheme based solely on that specific
-  target's memory footprint.  Therefore, the new mechanism might need to
+  target's memory usage.  Therefore, the new mechanism might need to
   allow user-space to pause/resume schemes based on custom, target-aware
   metrics.
 
@@ -33,8 +33,8 @@ these drawbacks as a run/stop mechanism:
   might be better suited for DAMOS auto-tuning goals.
 
 However, I realize these features could probably be achieved by simply
-improving the current watermarks API.  Most of the drawbacks I can think
-of are basically about "not enough metrics/customizability".
+improving the current watermarks.  Most of the drawbacks I can think of
+are basically about "not enough metrics/customizability".
 
 I assume there is a deeper architectural reason why you consider this
 direction unsuitable for long-term evolution.  If you could share a bit

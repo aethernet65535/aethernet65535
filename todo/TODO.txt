@@ -15,12 +15,14 @@ I will delete it o(*≧▽≦)ツ
 DAMON
 =====
 
-[Z] - clean damos_adjust_quota code
-[Z] - [make a better mechanism than watermarks](damon/no-watermarks.md)
+[Z] - Clean damos_adjust_quota code
+[Z] - [Make a better mechanism than watermarks](damon/no-watermarks.md)
     [W] - [Discuss about it](https://lore.kernel.org/damon/20260814084710.39955-1-aethernet65535@gmail.com)
     [W] - Test if DAMOS Quotas better than or similar to Watermarks monitoring MemAvailable
+[Z] - [Bug: DAMOS Quota will not set quota zero even if the condition is satisfied](https://elixir.bootlin.com/linux/v7.2-rc7/source/mm/damon/core.c#L2914)
+    [Z] - Ask SJ if this is Documentation problem or Code problem (I hope it is Code problem （＞人＜；）)
 
 Linux-Kernel-Internals/MM/DAMON
 ===============================
 
-[Z] - how damos quota adjust worked and why is it existed?
+[Z] - How damos quota adjust worked and why is it existed?

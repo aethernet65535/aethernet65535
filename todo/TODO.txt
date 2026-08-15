@@ -17,7 +17,8 @@ DAMON
 
 [Z] - clean damos_adjust_quota code
 [Z] - [make a better mechanism than watermarks](damon/no-watermarks.md)
-  [R] - [Discuss about it](damon/watermarks-draft.txt)
+    [W] - [Discuss about it](https://lore.kernel.org/damon/20260814084710.39955-1-aethernet65535@gmail.com)
+    [W] - Test if DAMOS Quotas better than or similar to Watermarks monitoring MemAvailable
 
 Linux-Kernel-Internals/MM/DAMON
 ===============================

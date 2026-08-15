@@ -16,9 +16,9 @@ DAMON
 =====
 
 [Z] - Clean damos_adjust_quota code
-[Z] - [Make a better mechanism than watermarks](damon/no-watermarks.md)
-    [W] - [Discuss about it](https://lore.kernel.org/damon/20260814084710.39955-1-aethernet65535@gmail.com)
-    [W] - Test if DAMOS Quotas better than or similar to Watermarks monitoring MemAvailable
+[Z] - Alternative of Watermarks
+    [S] - [Discuss about it](https://lore.kernel.org/damon/20260814084710.39955-1-aethernet65535@gmail.com)
+    [W] - Test if DAMOS Quotas better than or similar to Watermarks monitoring MemAvailable (Result: Yes, similar, and I think it should replace watermarks)
 [Z] - [Bug: DAMOS Quota will not set quota zero even if the condition is satisfied](https://elixir.bootlin.com/linux/v7.2-rc7/source/mm/damon/core.c#L2914)
     [Z] - Ask SJ if this is Documentation problem or Code problem (I hope it is Code problem （＞人＜；）)
 

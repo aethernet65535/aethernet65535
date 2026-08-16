@@ -1,4 +1,4 @@
-Subject: [RFC/Discussion] Helping with the alternative feature for
+Subject: [RFC/Discussion] mm/damon: Helping with alternative for
  watermarks
 
 Hi SJ,
@@ -43,7 +43,7 @@ mechanism in the right direction, rather than approaching it from my own
 assumptions.
 
 My need for a more accurate trigger metric (like MemAvailable) and
-always monitoring is exactly why I want to help you build the new
+always-on monitoring is exactly why I want to help build the new
 mechanism.  I prefer to invest my time in the future architecture rather
 than adding features to a mechanism that is about to be deprecated.
 

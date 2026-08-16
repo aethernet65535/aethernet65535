@@ -26,3 +26,4 @@ Linux-Kernel-Internals/MM/DAMON
 ===============================
 
 [Z] - How damos quota adjust worked and why is it existed?
+[R] - [Bug: Proactive Reclaim Example Script cannot worked](https://kernel-internals.org/mm/damon/#1-proactive-reclaim-page-out-cold-pages)

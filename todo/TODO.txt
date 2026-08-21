@@ -16,11 +16,20 @@ DAMON
 =====
 
 [Z] - Cleanup: damos_adjust_quota()
-[W] - [Bug: DAMOS Quota will not set quota zero even if the condition is satisfied](https://elixir.bootlin.com/linux/v7.2-rc7/source/mm/damon/core.c#L2914)
+
+[Z] - Feat: add 'fallback_value' and 'hysteresis_value' to DAMOS Quota Temporal Goal
+It was only a matter of time before Watermarks were deprecated; these
+changes were made to allow Watermarks functionality to also be achieved
+using DAMOS Quota.
+
+[W] - [Bug: DAMOS Quota will not set quota zero even if the condition is satisfied]
+(https://elixir.bootlin.com/linux/v7.2-rc7/source/mm/damon/core.c#L2914)
+
 [W] - Bug: Fix Weird logic of DAMON Charged Region
 [W] - Cleanup: Unified damon_is_last_region()
 
 Linux-Kernel-Internals/MM/DAMON
 ===============================
 
-[R] - [Bug: Proactive Reclaim Example Script cannot worked](https://kernel-internals.org/mm/damon/#1-proactive-reclaim-page-out-cold-pages)
+[R] - [Bug: Proactive Reclaim Example Script cannot worked]
+(https://kernel-internals.org/mm/damon/#1-proactive-reclaim-page-out-cold-pages)

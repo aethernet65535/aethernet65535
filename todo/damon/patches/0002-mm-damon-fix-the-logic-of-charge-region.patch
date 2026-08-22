@@ -1,0 +1,131 @@
+From fff3e9065b0607aab755244e6422779913ec8451 Mon Sep 17 00:00:00 2001
+From: Liew Rui Yan <aethernet65535@gmail.com>
+Date: Fri, 21 Aug 2026 23:09:44 +0800
+Subject: [PATCH 2/4] mm/damon: fix the logic of charge region
+
+The DAMOS quota charge tracking (charge_target_from / charge_addr_from)
+has three problems:
+
+1. In damos_skip_charged_region(), when charge_target_from is set and
+   the current region is the last region of the target, the charge info
+   is unconditionally reset and the region is skipped.  This means the
+   last region is always excluded from quota charging, regardless of
+   whether it has actually been charged.
+
+2. In damos_apply_scheme(), charge info is only updated when the quota
+   is full (damos_quota_is_full()).  When the scheme is filtered out by
+   damos_core_filter_out(), or the apply completes without filling the
+   quota, charge info is not advanced.  This leaves stale charge info
+   that causes previously-processed regions to be re-processed on the
+   next region walk.
+
+3. The reset of charge_target_from / charge_addr_from is scattered
+   across damos_skip_charged_region() in multiple code paths, making the
+   lifecycle hard to follow and prone to missing edge cases.
+
+Fix all three by:
+
+- Always advancing charge_target_from / charge_addr_from after each
+  scheme application attempt in damos_apply_scheme(), whether the scheme
+  was filtered out or actually applied.
+
+- Removing the unconditional last-region reset from
+  damos_skip_charged_region(), so the last region is no longer
+  prematurely excluded.
+
+- Centralizing the charge info reset in damon_do_apply_schemes(), using
+  a new helper damos_completely_charged() that checks whether
+  charge_addr_from has reached the end of the last region.  This
+  provides a single, unambiguous reset point per target walk.
+
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+---
+ mm/damon/core.c | 36 ++++++++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 08f011c3339d..a09acc2640c0 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -404,6 +404,11 @@ static bool damon_is_last_region(struct damon_region *r,
+ 	return r == damon_last_region(t);
+ }
+ 
++static bool damos_completely_charged(struct damos *s, struct damon_target *t)
++{
++	return s->quota.charge_addr_from == damon_last_region(t)->ar.end;
++}
++
+ /**
+  * damon_probe_hits_wsum() - Returns probe hits weighted sum of a region.
+  * @r:		region to get the weighted sum of.
+@@ -2347,11 +2352,7 @@ static bool damos_skip_charged_region(struct damon_target *t,
+ 	if (quota->charge_target_from) {
+ 		if (t != quota->charge_target_from)
+ 			return true;
+-		if (damon_is_last_region(r, t)) {
+-			quota->charge_target_from = NULL;
+-			quota->charge_addr_from = 0;
+-			return true;
+-		}
++
+ 		if (quota->charge_addr_from &&
+ 				r->ar.end <= quota->charge_addr_from)
+ 			return true;
+@@ -2368,8 +2369,6 @@ static bool damos_skip_charged_region(struct damon_target *t,
+ 			damon_split_region_at(t, r, sz_to_skip);
+ 			return true;
+ 		}
+-		quota->charge_target_from = NULL;
+-		quota->charge_addr_from = 0;
+ 	}
+ 	return false;
+ }
+@@ -2615,8 +2614,17 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 				goto update_stat;
+ 			damon_split_region_at(t, r, sz);
+ 		}
+-		if (damos_core_filter_out(c, t, r, s))
++		/*
++		 * To prevent charge_addr_from from remaining at a fixed value
++		 * for an extended period, the charge information still needs to
++		 * be updated.  However, since no apply was tried, no stat
++		 * update is required.
++		 */
++		if (damos_core_filter_out(c, t, r, s)) {
++			quota->charge_target_from = t;
++			quota->charge_addr_from = r->ar.end;
+ 			return;
++		}
+ 		ktime_get_coarse_ts64(&begin);
+ 		trace_damos_before_apply(cidx, sidx, tidx, r, nr_accesses,
+ 				damon_nr_regions(t), do_trace);
+@@ -2627,10 +2635,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 		quota->total_charged_ns += timespec64_to_ns(&end) -
+ 			timespec64_to_ns(&begin);
+ 		damos_charge_quota(quota, sz, sz_applied);
+-		if (damos_quota_is_full(quota, c->min_region_sz)) {
+-			quota->charge_target_from = t;
+-			quota->charge_addr_from = r->ar.end;
+-		}
++		quota->charge_target_from = t;
++		quota->charge_addr_from = r->ar.end;
+ 	}
+ 	if (s->action != DAMOS_STAT)
+ 		r->age = 0;
+@@ -2670,6 +2676,12 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 
+ 		if (damon_is_last_region(r, t))
+ 			s->stat.nr_snapshots++;
++
++		/* Reset so the next target is processed */
++		if (damos_completely_charged(s, t)) {
++			quota->charge_target_from = NULL;
++			quota->charge_addr_from = 0;
++		}
+ 	}
+ }
+ 
+-- 
+2.55.0
+

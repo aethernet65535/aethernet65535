@@ -1,0 +1,44 @@
+From 67b1cee4bb22a7b7d7454637dbf26c5d0769feba Mon Sep 17 00:00:00 2001
+From: Liew Rui Yan <aethernet65535@gmail.com>
+Date: Fri, 21 Aug 2026 22:51:16 +0800
+Subject: [PATCH 1/4] mm/damon: unify last-region check via
+ damon_is_last_region()
+
+Two call sites check whether a region is the last one: one uses
+damon_is_last_region() and the other uses r == damon_last_region()
+directly.  Furthermore, damon_is_last_region() itself uses
+list_is_last() which is a different mechanism.
+
+Consolidate all paths to use damon_is_last_region() so the check is
+consistent and any future change only needs to touch one place.
+
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+---
+ mm/damon/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 644daf5a1656..08f011c3339d 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -401,7 +401,7 @@ static void damon_destroy_region(struct damon_region *r,
+ static bool damon_is_last_region(struct damon_region *r,
+ 		struct damon_target *t)
+ {
+-	return list_is_last(&r->list, &t->regions_list);
++	return r == damon_last_region(t);
+ }
+ 
+ /**
+@@ -2347,7 +2347,7 @@ static bool damos_skip_charged_region(struct damon_target *t,
+ 	if (quota->charge_target_from) {
+ 		if (t != quota->charge_target_from)
+ 			return true;
+-		if (r == damon_last_region(t)) {
++		if (damon_is_last_region(r, t)) {
+ 			quota->charge_target_from = NULL;
+ 			quota->charge_addr_from = 0;
+ 			return true;
+-- 
+2.55.0
+

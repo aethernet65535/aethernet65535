@@ -1,0 +1,44 @@
+From 120818d762e4faabd2e6801c572c7ef5e07161d3 Mon Sep 17 00:00:00 2001
+From: Liew Rui Yan <aethernet65535@gmail.com>
+Date: Sat, 22 Aug 2026 00:28:26 +0800
+Subject: [PATCH 3/4] mm/damon: fix quota could not be set to zero
+
+Problem
+=======
+
+When the temporal quota goal tuner determines that the goal has been
+achieved (score >= 10000), it sets esz_bp to zero so that the effective
+quota becomes zero and the scheme stops applying.  However,
+damos_set_effective_quota() unconditionally clamps the quota to
+min_region_sz via max(ctx->min_region_sz, esz), preventing the quota
+from ever reaching zero.
+
+Solution
+========
+
+Skip the min_region_sz clamping when esz is already zero so that the
+temporal tuner's intent is respected.
+
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+---
+ mm/damon/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index a09acc2640c0..b1d2c675891c 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3124,7 +3124,9 @@ static void damos_set_effective_quota(struct damon_ctx *ctx, struct damos *s)
+ 		else
+ 			throughput = PAGE_SIZE * 1024;
+ 		esz = min(throughput * quota->ms, esz);
+-		esz = max(ctx->min_region_sz, esz);
++
++		if (esz)
++			esz = max(ctx->min_region_sz, esz);
+ 	}
+ 
+ 	if (quota->sz && quota->sz < esz)
+-- 
+2.55.0
+

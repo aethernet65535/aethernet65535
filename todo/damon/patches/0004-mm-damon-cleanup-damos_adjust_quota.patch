@@ -1,0 +1,99 @@
+From 3925cff005b1bc266fedb5d3fd0ed2a031589eec Mon Sep 17 00:00:00 2001
+From: Liew Rui Yan <aethernet65535@gmail.com>
+Date: Sat, 22 Aug 2026 15:05:00 +0800
+Subject: [PATCH 4/4] mm/damon: cleanup damos_adjust_quota()
+
+damos_adjust_quota() currently mixes three responsibilities:
+- refreshing the charge window
+- setting the effective quota
+- calculating min_score.
+
+This makes the function hard to follow.
+
+Split the logic into two helpers:
+- damos_refresh_quota_window() handles charge window resets and
+  effective quota updates
+- damos_set_min_score() calculates the minimum score for region
+  prioritization
+
+damos_adjust_quota() becomes a thin wrapper that guards on quota
+configuration and calls the two helpers.  No behavioral change.
+
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+---
+ mm/damon/core.c | 43 +++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 35 insertions(+), 8 deletions(-)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index b1d2c675891c..a35f803b8027 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3149,16 +3149,10 @@ static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
+ 	trace_damos_esz(cidx, sidx, quota->esz);
+ }
+ 
+-static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
++static void damos_refresh_quota_window(struct damon_ctx *c, struct damos *s)
+ {
+ 	struct damos_quota *quota = &s->quota;
+-	struct damon_target *t;
+-	struct damon_region *r;
+-	unsigned long cumulated_sz, cached_esz;
+-	unsigned int score, max_score = 0;
+-
+-	if (!quota->ms && !quota->sz && list_empty(&quota->goals))
+-		return;
++	unsigned long cached_esz;
+ 
+ 	/* First charge window */
+ 	if (!quota->total_charged_sz && !quota->charged_from) {
+@@ -3183,6 +3177,26 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 		if (trace_damos_esz_enabled() && quota->esz != cached_esz)
+ 			damos_trace_esz(c, s, quota);
+ 	}
++}
++
++/*
++ * damos_set_min_score - making a good decision under the quotas.
++ * @c:		context of scheme.
++ * @s:		the scheme to calculate min_score.
++ *
++ * DAMOS prioritizes regions and applies the action to only regions having
++ * enough priorities/score so that it will not exceed the quotas.
++ *
++ * More details are available at 'Prioritization' section of
++ * Documentation/mm/damon/design.rst.
++ */
++static void damos_set_min_score(struct damon_ctx *c, struct damos *s)
++{
++	struct damos_quota *quota = &s->quota;
++	struct damon_target *t;
++	struct damon_region *r;
++	unsigned long cumulated_sz;
++	unsigned int score, max_score = 0;
+ 
+ 	if (!c->ops.get_scheme_score)
+ 		return;
+@@ -3214,6 +3228,19 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 	quota->min_score = score;
+ }
+ 
++static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
++{
++	struct damos_quota *quota = &s->quota;
++
++	if (!quota->ms && !quota->sz && list_empty(&quota->goals))
++		return;
++
++	/* Reset charge window information and set effective quota */
++	damos_refresh_quota_window(c, s);
++
++	damos_set_min_score(c, s);
++}
++
+ static void damos_trace_stat(struct damon_ctx *c, struct damos *s)
+ {
+ 	unsigned int cidx = 0, sidx = 0;
+-- 
+2.55.0
+
